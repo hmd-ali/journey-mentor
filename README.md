@@ -2,6 +2,8 @@
 
 ## Live Demo
 
+The live demo can be accessed [here](https://journey-mentor-challenge.netlify.app/)
+
 ## The stack
 
 - Vue3/Nuxt
