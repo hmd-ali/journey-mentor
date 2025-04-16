@@ -35,4 +35,5 @@ export type CountryWithDetails = Country & {
   currencies: string[]
   languages: string[]
   borders: string[]
+  ogImage: string
 }

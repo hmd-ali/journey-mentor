@@ -32,6 +32,7 @@ const {
       borders: country.borders,
       currencies: Object.values(country.currencies).map((currency) => currency.name),
       topLevelDomain: country.tld,
+      ogImage: country.flags.png,
     } satisfies CountryWithDetails
   },
 )
@@ -41,7 +42,7 @@ const description = computed(
   () =>
     `Population: ${country.value?.population}, Region: ${country.value?.region}, Capital: ${country.value?.capital}`,
 )
-const image = computed(() => country.value?.flag)
+const image = computed(() => country.value?.ogImage)
 
 useSeoMeta({
   title: title.value,
