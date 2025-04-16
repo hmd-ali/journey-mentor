@@ -11,27 +11,30 @@ const {
   data: country,
   status,
   error,
-} = await useAsyncData(`country-name/${route.params.name}`, async () => {
-  const response = await $api<CountryResponse[]>(`name/${route.params.name}`)
-  const country = response?.[0]
-  if (!country) {
-    return null
-  }
-  return {
-    name: country.name.common,
-    nativeName: Object.values(country.name.nativeName)[0]?.common ?? country.name.common,
-    flag: country.flags.svg,
-    flagAlt: country.flags.alt,
-    population: country.population,
-    region: country.region,
-    capital: country.capital?.[0] ?? '-',
-    subRegion: country.subregion ?? '-',
-    languages: Object.values(country.languages),
-    borders: country.borders,
-    currencies: Object.values(country.currencies).map((currency) => currency.name),
-    topLevelDomain: country.tld,
-  } satisfies CountryWithDetails
-})
+} = await useAsyncData<CountryWithDetails | null, { message: string; status: number }>(
+  `country-name/${route.params.name}`,
+  async () => {
+    const response = await $api<CountryResponse[]>(`name/${route.params.name}`)
+    const country = response?.[0]
+    if (!country) {
+      return null
+    }
+    return {
+      name: country.name.common,
+      nativeName: Object.values(country.name.nativeName)[0]?.common ?? country.name.common,
+      flag: country.flags.svg,
+      flagAlt: country.flags.alt,
+      population: country.population,
+      region: country.region,
+      capital: country.capital?.[0] ?? '-',
+      subRegion: country.subregion ?? '-',
+      languages: Object.values(country.languages),
+      borders: country.borders,
+      currencies: Object.values(country.currencies).map((currency) => currency.name),
+      topLevelDomain: country.tld,
+    } satisfies CountryWithDetails
+  },
+)
 </script>
 
 <template>
@@ -45,14 +48,35 @@ const {
         Back
       </NuxtLink>
     </div>
-    <div v-if="country" class="mt-10 flex flex-col gap-10 lg:flex-row lg:items-center lg:gap-20">
-      <NuxtImg placeholder class="aspect-[4/3] flex-1" :src="country.flag" :alt="country.flagAlt" />
+    <div v-if="status === 'pending'" class="flex items-center justify-center py-60">
+      <Icon name="svg-spinners:3-dots-move" size="80" />
+    </div>
+    <div v-else-if="error" class="flex w-full flex-col items-center gap-y-2 py-40 text-lg">
+      <p class="text-red-500">
+        {{ error?.data?.status }}
+      </p>
+      <p class="text-red-500">
+        {{ error?.toJSON().data?.message }}
+      </p>
+    </div>
+    <div
+      v-else-if="country"
+      class="mt-10 flex flex-col gap-10 lg:flex-row lg:items-center lg:gap-20"
+    >
+      <NuxtImg
+        placeholder
+        class="aspect-[4/3] flex-1 object-cover"
+        :src="country.flag"
+        :alt="country.flagAlt"
+        width="400"
+        height="300"
+      />
       <div class="flex flex-1 flex-col gap-y-8">
         <h1 class="mb-6 text-xl font-extrabold">{{ country.name }}</h1>
         <div class="lg:flex lg:w-max lg:shrink-0 lg:gap-x-20">
           <div class="flex flex-col gap-y-2">
             <LabelValue label="Native Name" :value="country.nativeName" />
-            <LabelValue label="Population" :value="country.population" />
+            <LabelValue label="Population" :value="formatNumber(country.population)" />
             <LabelValue label="Region" :value="country.region" />
             <LabelValue label="Sub Region" :value="country.subRegion" />
             <LabelValue label="Capital" :value="country.capital" />

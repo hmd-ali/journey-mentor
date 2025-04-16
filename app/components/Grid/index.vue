@@ -5,7 +5,7 @@ import { breakpointsTailwind } from '@vueuse/core'
 const scroller = useTemplateRef<{ $el: Element }>('scroller')
 const { active } = useBreakpoints(breakpointsTailwind)
 
-const props = defineProps<{
+defineProps<{
   countries: Country[]
 }>()
 
@@ -19,29 +19,25 @@ const styles = computed(() => {
         itemSize: 500,
       }
     case 'sm':
+    case 'md':
       return {
         gridItems: 2,
         itemSize: 450,
       }
-    case 'md':
-      return {
-        gridItems: 3,
-        itemSize: 400,
-      }
     case 'lg':
       return {
-        gridItems: 4,
-        itemSize: 400,
+        gridItems: 3,
+        itemSize: 450,
       }
     case 'xl':
       return {
-        gridItems: 5,
+        gridItems: 4,
         itemSize: 400,
       }
     case '2xl':
     default:
       return {
-        gridItems: 6,
+        gridItems: 5,
         itemSize: 400,
       }
   }
@@ -77,8 +73,8 @@ const currentBreakpoint = active()
     item-class="w-full flex"
   >
     <template #default="{ item, index }: { item: Country; index: number }">
-      <div class="grow p-2">
-        <GridItem :key="index" class="h-full" :country="item" />
+      <div :key="`${item.name}-${index}`" class="grow p-2">
+        <GridItem :key="`${item.name}-${index}`" class="h-full" :country="item" />
       </div>
     </template>
   </RecycleScroller>

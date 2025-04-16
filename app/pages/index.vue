@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import type { Country, CountryResponse } from '~~/types/country'
 
-const { url } = useFilters()
+const { url, sortBy, sortOrder } = useFilters()
 
 const { $api } = useNuxtApp()
 
 const {
-  data: _countries,
+  data: countries,
   status,
   error,
 } = await useAsyncData<Country[]>(
@@ -29,7 +29,32 @@ const {
   },
 )
 
-const countries = computed(() => _countries.value ?? [])
+const title = 'Countries'
+const description = 'List of countries'
+
+useSeoMeta({
+  title,
+  description,
+  ogTitle: title,
+  ogDescription: description,
+  twitterTitle: title,
+  twitterDescription: description,
+})
+
+const sortedCountries = computed(() => {
+  if (!countries.value) return []
+  const sorted = [...countries.value]
+  sorted.sort((a, b) => {
+    if (sortBy.value === 'name') {
+      return sortOrder.value === 'asc' ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name)
+    }
+    if (sortBy.value === 'population') {
+      return sortOrder.value === 'asc' ? a.population - b.population : b.population - a.population
+    }
+    return 0
+  })
+  return sorted
+})
 </script>
 
 <template>
@@ -40,7 +65,7 @@ const countries = computed(() => _countries.value ?? [])
     </div>
     <div v-else-if="error">error</div>
     <div v-else-if="countries !== undefined && countries.length > 0" class="mt-10">
-      <Grid :countries />
+      <Grid :countries="sortedCountries" />
     </div>
     <div v-else>No Data.</div>
   </div>

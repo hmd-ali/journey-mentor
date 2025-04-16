@@ -5,8 +5,8 @@ const searchLabel = 'Search for a country...'
 </script>
 
 <template>
-  <div class="flex flex-col items-center justify-between gap-10 md:flex-row">
-    <label class="bg-elements relative w-full max-w-md rounded-md">
+  <div class="flex flex-col justify-between gap-10 lg:flex-row lg:items-center">
+    <label class="bg-elements relative inline-block w-full max-w-md rounded-md">
       <Icon
         name="ph:magnifying-glass-duotone"
         class="absolute start-4 top-1/2 size-4 -translate-1/2"
@@ -22,6 +22,11 @@ const searchLabel = 'Search for a country...'
         >{{ searchLabel }}</span
       >
     </label>
-    <FiltersRegion />
+
+    <div class="flex flex-wrap items-center gap-4">
+      <FiltersSortBy />
+      <FiltersSortOrder />
+      <FiltersRegion />
+    </div>
   </div>
 </template>

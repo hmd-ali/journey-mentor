@@ -1,4 +1,4 @@
-import { REGIONS } from '~/contants/regions'
+import { REGIONS } from '~/constants/regions'
 import { useCountryNames } from '~/stores/countryName'
 
 export const useFilters = () => {
@@ -27,9 +27,19 @@ export const useFilters = () => {
     }
   })
 
+  const sortBy = useRouteQuery<'name' | 'population'>('sort_by', 'population', {
+    transform: (value) => (['population', 'name'].includes(value) ? value : 'population'),
+  })
+
+  const sortOrder = useRouteQuery<'asc' | 'desc'>('sort_order', 'desc', {
+    transform: (value) => (['asc', 'desc'].includes(value) ? value : 'desc'),
+  })
+
   return {
     search,
     region,
+    sortBy,
+    sortOrder,
     debouncedSearch,
     getCountryNameBySearching,
     countryNames,

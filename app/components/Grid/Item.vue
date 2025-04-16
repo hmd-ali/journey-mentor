@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Country } from '~~/types/country'
 
-const props = defineProps<{
+defineProps<{
   country: Country
 }>()
 </script>
@@ -16,13 +16,15 @@ const props = defineProps<{
       placeholder
       :src="country.flag"
       :alt="country.flagAlt"
+      width="400"
+      height="300"
       class="aspect-[4/3] max-h-60 w-full"
     />
-    <div class="flex flex-col px-4 pt-3 pb-6">
+    <div class="flex grow flex-col px-4 pt-3 pb-6">
       <h2 class="line-clamp-2 text-2xl font-bold">{{ country.name }}</h2>
-      <div class="mt-4 flex flex-col gap-y-2 text-lg">
+      <div class="mt-4 flex grow flex-col justify-end gap-y-2 text-lg">
         <p class="font-thin">
-          <strong class="font-semibold">Population:</strong> {{ country.population }}
+          <strong class="font-semibold">Population:</strong> {{ formatNumber(country.population) }}
         </p>
         <p class="font-thin"><strong class="font-semibold">Region:</strong> {{ country.region }}</p>
         <p class="font-thin">

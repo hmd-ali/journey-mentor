@@ -5,14 +5,15 @@ export const useTheme = () => {
     default: () => 'light',
   })
 
-  useHead(() => ({
+  useHead({
     htmlAttrs: {
       class: theme.value,
     },
-  }))
+  })
 
   const setTheme = (value: Theme) => {
     theme.value = value
+    document.documentElement.className = value
   }
 
   const toggleTheme = () => {
