@@ -26,4 +26,7 @@ export default defineNuxtConfig({
   icon: {
     mode: 'svg',
   },
+  image: {
+    domains: ['flagcdn.com', 'netlify.app'],
+  },
 })
