@@ -1,0 +1,29 @@
+@import 'tailwindcss';
+
+:root {
+  --dark-blue-100: hsl(209, 23%, 22%);
+  --dark-blue-200: hsl(207, 26%, 17%);
+  --dark-blue-300: hsl(200, 15%, 8%);
+
+  --white: hsl(0, 0%, 100%);
+  --dark-grey-100: hsl(0, 0%, 98%);
+  --dark-grey-200: hsl(0, 0%, 52%);
+
+  --color-primary: var(--dark-blue-300);
+  --color-background: var(--dark-grey-100);
+  --color-elements: var(--white);
+}
+
+:root.dark {
+  --color-primary: var(--white);
+  --color-background: var(--dark-blue-200);
+  --color-elements: var(--dark-blue-100);
+}
+
+@theme {
+  --color-primary: var(--color-primary);
+  --color-background: var(--color-background);
+  --color-elements: var(--color-elements);
+
+  --font-nunito_sans: 'Nunito Sans', sans-serif;
+}
