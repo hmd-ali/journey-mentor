@@ -35,6 +35,27 @@ const {
     } satisfies CountryWithDetails
   },
 )
+
+const title = computed(() => country.value?.name)
+const description = computed(
+  () =>
+    `Population: ${country.value?.population}, Region: ${country.value?.region}, Capital: ${country.value?.capital}`,
+)
+const image = computed(() => country.value?.flag)
+
+useSeoMeta({
+  title: title.value,
+  ogTitle: title.value,
+  twitterTitle: title.value,
+  titleTemplate: 'Country Details | %s',
+  description: description.value,
+  ogDescription: description.value,
+  twitterDescription: description.value,
+  ogImage: image.value,
+  twitterImage: image.value,
+  twitterCard: 'summary_large_image',
+  ogUrl: useRuntimeConfig().public.baseURL + route.path,
+})
 </script>
 
 <template>

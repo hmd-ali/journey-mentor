@@ -29,8 +29,9 @@ const {
   },
 )
 
-const title = 'Countries'
+const title = 'Country list'
 const description = 'List of countries'
+const image = '/preview.jpg'
 
 useSeoMeta({
   title,
@@ -39,6 +40,10 @@ useSeoMeta({
   ogDescription: description,
   twitterTitle: title,
   twitterDescription: description,
+  ogImage: image,
+  twitterImage: image,
+  ogUrl: useRuntimeConfig().public.baseURL,
+  twitterCard: 'summary_large_image',
 })
 
 const sortedCountries = computed(() => {

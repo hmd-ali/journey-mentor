@@ -29,4 +29,10 @@ export default defineNuxtConfig({
   image: {
     domains: ['flagcdn.com', 'netlify.app'],
   },
+
+  runtimeConfig: {
+    public: {
+      baseURL: 'https://journey-mentor-challenge.netlify.app',
+    },
+  },
 })
