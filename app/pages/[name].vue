@@ -95,7 +95,7 @@ useSeoMeta({
       />
       <div class="flex flex-1 flex-col gap-y-8">
         <h1 class="mb-6 text-xl font-extrabold">{{ country.name }}</h1>
-        <div class="lg:flex lg:w-max lg:shrink-0 lg:gap-x-20">
+        <div class="flex flex-col gap-y-10 lg:w-max lg:shrink-0 lg:flex-row lg:gap-x-20">
           <div class="flex flex-col gap-y-2">
             <LabelValue label="Native Name" :value="country.nativeName" />
             <LabelValue label="Population" :value="formatNumber(country.population)" />
@@ -112,18 +112,21 @@ useSeoMeta({
         <div>
           <dl class="flex flex-wrap gap-4">
             <dt class="inline-block font-bold">Border Countries:</dt>
-            <dt
-              v-for="border in country.borders"
-              :key="border"
-              class="inline-block transition-transform duration-200 hover:scale-105"
-            >
-              <NuxtLink
-                class="bg-elements rounded-md px-4 py-2 shadow-md"
-                :to="`/${getNameFromBorder(border)}`"
+            <template v-if="country.borders?.length > 0">
+              <dt
+                v-for="border in country.borders"
+                :key="border"
+                class="inline-block transition-transform duration-200 hover:scale-105"
               >
-                {{ getNameFromBorder(border) }}
-              </NuxtLink>
-            </dt>
+                <NuxtLink
+                  class="bg-elements rounded-md px-4 py-2 shadow-md"
+                  :to="`/${getNameFromBorder(border)}`"
+                >
+                  {{ getNameFromBorder(border) }}
+                </NuxtLink>
+              </dt>
+            </template>
+            <dt v-else>None</dt>
           </dl>
         </div>
       </div>
