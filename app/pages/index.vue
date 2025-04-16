@@ -9,7 +9,7 @@ const {
   data: countries,
   status,
   error,
-} = await useAsyncData<Country[]>(
+} = await useAsyncData<Country[], { message: string; status: number }>(
   async () => {
     const response = await $api<CountryResponse[]>(`${url.value}`)
 
@@ -68,7 +68,14 @@ const sortedCountries = computed(() => {
     <div v-if="status === 'pending'" class="flex items-center justify-center py-60">
       <Icon name="svg-spinners:3-dots-move" size="80" />
     </div>
-    <div v-else-if="error">error</div>
+    <div v-else-if="error" class="flex w-full flex-col items-center gap-y-2 py-40 text-lg">
+      <p class="text-red-500">
+        {{ error?.data?.status }}
+      </p>
+      <p class="text-red-500">
+        {{ error?.toJSON().data?.message }}
+      </p>
+    </div>
     <div v-else-if="countries !== undefined && countries.length > 0" class="mt-10">
       <Grid :countries="sortedCountries" />
     </div>

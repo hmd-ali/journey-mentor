@@ -7,7 +7,7 @@ export const useFilters = () => {
 
   const { countryNames, getCountryNameBySearching } = useCountryNames()
 
-  const search = useRouteQuery('q', '', {
+  const search = useRouteQuery<string>('q', '', {
     router,
     route,
   })
