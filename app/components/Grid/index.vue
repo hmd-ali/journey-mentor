@@ -27,18 +27,18 @@ const styles = computed(() => {
     case 'lg':
       return {
         gridItems: 3,
-        itemSize: 450,
+        itemSize: 500,
       }
     case 'xl':
       return {
         gridItems: 4,
-        itemSize: 400,
+        itemSize: 450,
       }
     case '2xl':
     default:
       return {
         gridItems: 5,
-        itemSize: 400,
+        itemSize: 450,
       }
   }
 })
